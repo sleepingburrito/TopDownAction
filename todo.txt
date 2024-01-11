@@ -1,4 +1,13 @@
-make git
+start working on a player object
+    -key update
+        -add stun
+    -break down ticks into smaller parts
+    -add walking
+
+game scene
+    -holds all sene objects
+    -walls
+
 
 make random
     array 1 to 1000
@@ -17,21 +26,6 @@ make random
     choose a number randomly in the list, between 0 and timesCalledLeft
     swap index with the last value and lower the range by 1
     timesCalledLeft -= 1
-
-game scene
-    -holds all sene objects
-
-physocs
-    -test overlap
-    -gravity
-
-start working on a player object
-    -key update
-        -add stun
-    -break down ticks into smaller parts
-    -add walking
-
-then start working on walls
 
 
 

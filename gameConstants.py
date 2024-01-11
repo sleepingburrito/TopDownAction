@@ -100,6 +100,14 @@ class PLAYER_ID(IntEnum):
     ONE = auto()
     TWO = auto()
 
+class PLAYER_TIMER(IntEnum):
+    @staticmethod
+    def _generate_next_value_(name, start, count, last_values):
+        return count
+    #it, value in milliseconds
+    STUN = auto()
+
+
 PLAYER_SIZE = 32
 PLAYER_MAX_HP = 100
 

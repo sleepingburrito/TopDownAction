@@ -59,6 +59,9 @@ class GameTimer:
    def Tick(self) -> None:
       self._timerStateTicks += 1 if self._timerStateTicks < gameConstants.TIMER_MAX_TICKS else 0
 
+   def GetTimeMsPassed(self) -> float:
+      return TicksToMilliseconds(self._timerStateTicks)
+
    #return range 0.0-1.0
    def PercentageCompleted(self) -> float:
       if self._timerEndTicks == 0:

@@ -1,7 +1,7 @@
 import pygame
 import gametools
-import gameConstants
-import gameTiming
+import gameConstants as gcon
+import gameTiming as gTim
 import gameBoxPhy
 import gameInput
 
@@ -22,30 +22,40 @@ class player:
 
     #etc
     def Reset(self) -> None:
-        self._hp = gameConstants.PLAYER_MAX_HP
+        self._hp = gcon.PLAYER_MAX_HP
         self._blockControl = False
         self.RestAllKeys()
-        
-        #test
-        self.jumpTimerTest = gameTiming.GameTimer(2000)
 
-    def __init__(self, playerId: gameConstants.PLAYER_ID ) -> None:
+        #timing reset/set
+        for timeTmp in self._timers:
+            timeTmp.FullReset()
+        #default timer vaules
+
+
+    #end of reset
+
+
+    def __init__(self, playerId: gcon.PLAYER_ID ) -> None:
         self._playerId = playerId
-        self._physicsBox = gameBoxPhy.box((300,100,100),(gameConstants.PLAYER_SIZE,gameConstants.PLAYER_SIZE,0))
+        self._physicsBox = gameBoxPhy.box((300,100,100),(gcon.PLAYER_SIZE,gcon.PLAYER_SIZE,0))
+        
+        #timing init
+        self._timers: list[gTim.GameTimer] = []
+        for timeTmp in gcon.PLAYER_TIMER.STUN:
+            self._timers.append(gTim.GameTimer(timeTmp[1]))
+        
+        #end reset/everything else
         self.Reset()
+    #end of init
 
 
     #tick actions
     def Tick(self) -> None:
-
-        #jump test
-        self.jumpTimerTest.Tick()
-        if self.jumpTimerTest.IsDone():
-            self._physicsBox._accelerationZ = 2
-            self.jumpTimerTest.ResetTimer()
-
-
         self._physicsBox.PhysicsTick()
+
+        #test timer
+
+    #end of Tick
 
 
     #draw
@@ -54,6 +64,7 @@ class player:
 
 
 # #input test
+                #self._timers[gcon.PLAYER_TIMER.STUN] = gcon.PLAYER_TIME_STUN_TEST #test
 # gameInput.TickInputs()
 # testspeed = gameConstants.WALKING_SPEED
 # upKey = gameInput.AllUserInput[gameConstants.PLAYER_ID.ONE][gameConstants.INPUT_ID.UP].IsInputActive()
