@@ -1,0 +1,54 @@
+make git
+
+make random
+    array 1 to 1000
+
+    tickSeed
+    lastValue
+    currentIndex
+    timesCalledLeft
+
+    if (timesCalledLeft = 0)
+        currentin = 0
+        timesCalledLeft = RND_MAX
+    else
+        currentIndex = (tickseed ^ timesCalledLeft + lastValue) % timesCalledLeft
+
+    choose a number randomly in the list, between 0 and timesCalledLeft
+    swap index with the last value and lower the range by 1
+    timesCalledLeft -= 1
+
+game scene
+    -holds all sene objects
+
+physocs
+    -test overlap
+    -gravity
+
+start working on a player object
+    -key update
+        -add stun
+    -break down ticks into smaller parts
+    -add walking
+
+then start working on walls
+
+
+
+
+
+story
+----------
+trying to take down a super weapon made by some pers
+the super weapon is a ai. the ai takes its self out as it sees its self as the main therat
+person who made the ai is end boss
+as you add more players you get more enimes and contwnt
+
+ideas
+------------
+shild guns
+particlas and air that efects the particlas
+sparks
+charging attacks
+jumping
+physics based
