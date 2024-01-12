@@ -18,7 +18,6 @@ gameRunning = True
 #local game code setup
 gameInput.InitInput()
 testplayer = gamePlayer.player(gameConstants.PLAYER_ID.ONE)
-testplayer._physicsBox.SetAccelerationAngleMagnitude(0, 3)
 
 
 while gameRunning:
@@ -35,6 +34,7 @@ while gameRunning:
 
 
     #main tick
+    gameInput.TickInputs()
     testplayer.Tick()
 
 

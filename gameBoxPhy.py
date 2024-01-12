@@ -32,7 +32,7 @@ class box:
         self._width = gameConstants.PHY_MIN_WIDTH
         self._height = gameConstants.PHY_MIN_HIEGHT
         self._zHeight = gameConstants.ZHIEGHT_MIN
-        self._friction = 0
+        self._friction = gameConstants.FRICTION_GROUND_PERCENTAGE
 
         #physics
         self.ResetAccelerationAndVelocity()

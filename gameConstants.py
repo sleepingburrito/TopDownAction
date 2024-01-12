@@ -74,7 +74,7 @@ SPEED_MIN_ANY = 0.0001 #speeds less than this get rounded down, per axis for ACC
 
 #values are in per millisecond, always postive values
 FRICTION_AIR_PERCENTAGE = 1 - (MILLISECONDS_IN_TICK * 0.0012) # how much you want it to go down divided by the time in a tick. only want to take 0.01% away, so 0.01/8.333 = 0.0012
-FRICTION_GROUND_PERCENTAGE = MILLISECONDS_IN_TICK * 0.01
+FRICTION_GROUND_PERCENTAGE = 1 - (MILLISECONDS_IN_TICK * 0.0018)
 
 #max x/y size
 PHY_MIN_WIDTH = 1
@@ -107,7 +107,6 @@ class PLAYER_TIMER(IntEnum):
     #it, value in milliseconds
     STUN = auto()
 
-
 PLAYER_SIZE = 32
 PLAYER_MAX_HP = 100
 
@@ -118,8 +117,8 @@ Z_ONTOP = 1
 
 #active objects
 #=============================
-WALKING_SPEED = MILLISECONDS_IN_TICK * 0.1
-WALKING_SPEED_MAX = MILLISECONDS_IN_TICK * 0.5
+PLAYER_WALKING_SPEED = MILLISECONDS_IN_TICK * 0.01
+PLAYER_WALKING_SPEED_MAX = MILLISECONDS_IN_TICK * 1
 
 
 
