@@ -1,8 +1,5 @@
 start working on a player object
-    -key update
-        -add stun
-    -break down ticks into smaller parts
-    -add walking
+    -add jumping
 
 game scene
     -holds all sene objects

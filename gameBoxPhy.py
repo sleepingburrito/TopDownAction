@@ -406,7 +406,9 @@ class box:
     
     #etc
     def DebugDrawBox(self, drawToSurface: pygame.surface.SurfaceType) -> None:
-        #shadow
-        pygame.draw.rect(drawToSurface, gameConstants.DEBUG_SHADOW_COLOR, self.GetXYHW(), width = gameConstants.DEBUG_BOX_WIDTH)
-        #box
-        pygame.draw.rect(drawToSurface, gameConstants.DEBUG_BOX_COLOR, self.GetXYHWwithZYoffset(), width = gameConstants.DEBUG_BOX_WIDTH)
+        if gameConstants.GAME_DEBUG:
+            #shadow
+            if self.z > 0:
+                pygame.draw.rect(drawToSurface, gameConstants.DEBUG_SHADOW_COLOR, self.GetXYHW(), width = gameConstants.DEBUG_BOX_WIDTH)
+            #box
+            pygame.draw.rect(drawToSurface, gameConstants.DEBUG_BOX_COLOR, self.GetXYHWwithZYoffset(), width = gameConstants.DEBUG_BOX_WIDTH)

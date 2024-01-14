@@ -8,6 +8,7 @@ from enum import auto
 #======================
 GAME_NAME = "Top Down Action"
 GAME_VERSION = "0.0.0"
+GAME_DEBUG = True
 
 
 #game units screen size
@@ -45,15 +46,22 @@ class DIRECTIONS(IntEnum):
     @staticmethod
     def _generate_next_value_(name, start, count, last_values):
         return count
-    LEFT = auto()
     UP = auto() #top
-    RIGHT = auto()
     DOWN = auto() #bottom
+    LEFT = auto()
+    RIGHT = auto()
+    DOWN_RIGHT = auto()
+    UP_RIGHT = auto()
+    UP_LEFT = auto()
+    DOWN_LEFT = auto()
+    
+
 
 RANDOM_MAX = 1000 
 
 #math
 #========================
+ANGLE_NON = -1
 ANGLE_UP = math.radians(180)
 ANGLE_DOWN = 0
 ANGLE_LEFT = math.radians(270)
@@ -70,7 +78,7 @@ ANGLE_DOWN_LEFT = math.radians(315)
 #max values are all in a single tick
 VSPEED_MAX = 32
 ACCELERATION_MAX = VSPEED_MAX / 2
-SPEED_MIN_ANY = 0.0001 #speeds less than this get rounded down, per axis for ACCELERATION and velocity
+SPEED_MIN_ANY = 0.01 #speeds less than this get rounded down, per axis for ACCELERATION and velocity
 
 #values are in per millisecond, always postive values
 FRICTION_AIR_PERCENTAGE = 1 - (MILLISECONDS_IN_TICK * 0.0012) # how much you want it to go down divided by the time in a tick. only want to take 0.01% away, so 0.01/8.333 = 0.0012
