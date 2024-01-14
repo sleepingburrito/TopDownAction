@@ -1,9 +1,11 @@
 start working on a player object
-    -add jumping
+    -play with recoil
+
 
 game scene
     -holds all sene objects
     -walls
+    -bounching on walls
 
 
 make random
@@ -23,8 +25,6 @@ make random
     choose a number randomly in the list, between 0 and timesCalledLeft
     swap index with the last value and lower the range by 1
     timesCalledLeft -= 1
-
-
 
 
 

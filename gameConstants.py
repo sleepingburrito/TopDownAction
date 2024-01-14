@@ -81,7 +81,7 @@ ACCELERATION_MAX = VSPEED_MAX / 2
 SPEED_MIN_ANY = 0.01 #speeds less than this get rounded down, per axis for ACCELERATION and velocity
 
 #values are in per millisecond, always postive values
-FRICTION_AIR_PERCENTAGE = 1 - (MILLISECONDS_IN_TICK * 0.0012) # how much you want it to go down divided by the time in a tick. only want to take 0.01% away, so 0.01/8.333 = 0.0012
+FRICTION_AIR_PERCENTAGE = 1 - (MILLISECONDS_IN_TICK * 0.00025) # how much you want it to go down divided by the time in a tick. only want to take 0.01% away, so 0.01/8.333 = 0.0012
 FRICTION_GROUND_PERCENTAGE = 1 - (MILLISECONDS_IN_TICK * 0.0018)
 
 #max x/y size
@@ -91,13 +91,15 @@ PHY_MIN_HIEGHT = 1
 PHY_MAX_HIEGHT = SCREEN_HEIGHT_PIXELS
 
 #z axis stuff
-GRAVITY_ACCELERATION = MILLISECONDS_IN_TICK * 0.005
+GRAVITY_ACCELERATION = MILLISECONDS_IN_TICK * 0.01
 Z_MAX_ACCELERATION = ACCELERATION_MAX
 Z_MAX_VELOCITY = VSPEED_MAX
 Z_MIN = 0
+Z_CEILING_BOUNCE = 0.5 #how much velocity is lost after hitting celing 
 Z_MAX = 100
 ZHIEGHT_MIN = 1
 ZHEIGHT_MAX = Z_MAX
+
 
 #player
 #=============================
@@ -114,6 +116,7 @@ class PLAYER_TIMER(IntEnum):
         return count
     #it, value in milliseconds
     STUN = auto()
+    JUMP_TIMING = auto() #grace period
 
 PLAYER_SIZE = 32
 PLAYER_MAX_HP = 100
@@ -122,6 +125,9 @@ PLAYER_MAX_HP = 100
 Z_UNDER = -1
 Z_OVERLAP = 0
 Z_ONTOP = 1
+
+PLAYER_JUMP_AMOUNT = MILLISECONDS_IN_TICK * 0.13
+PLAYER_JUMP_INPUT_TIMING = 34 #in ms
 
 #active objects
 #=============================
@@ -139,7 +145,7 @@ class INPUT_ID(IntEnum):
     START = auto()
     BACK = auto()
     ACTION = auto()
-    CHARGE_SHOOT = auto()
+    JUMP = auto()
     PLACE_HOLDER1 = auto()
     PLACE_HOLDER2 = auto()
     PLACE_HOLDER3 = auto()
@@ -158,35 +164,5 @@ DEBUG_BOX_WIDTH = 1
 DEBUG_SHADOW_COLOR = "blue"
 
 DEFAULT_BG_COLOR = "black"
-
-
-
-#sound
-#======================
-""" SOUND_FADEIN_MS = 500
-SOUND_FADEOUT_MS = 500
-
-class SOUND_TYPE_ID(IntEnum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return count
-    EFFECT = auto()
-    MUSIC = auto()
-
-
-BASE_SOUND_LOCATION = "sound"
-BASE_SOUND_EFFECT_LOCATION = "effects"
-BASE_SOUND_MUSIC_LOCATION = "music"
-class SOUND_ID(Enum):
-    @staticmethod
-    def _generate_next_value_(name, start, count, last_values):
-        return count
-    #id, type, file name
-    #effects
-    TEST0 = (auto(), SOUND_TYPE_ID.EFFECT.value, "se1.ogg")
-    TEST1 = (auto(), SOUND_TYPE_ID.EFFECT.value, "se2.ogg")
-    #music
-    MTEST0 = (auto(), SOUND_TYPE_ID.MUSIC.value, "test1.ogg")
-    MTEST1 = (auto(), SOUND_TYPE_ID.MUSIC.value, "test2.ogg") """
 
 

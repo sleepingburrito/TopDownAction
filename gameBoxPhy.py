@@ -126,12 +126,12 @@ class box:
     def zHeight(self, input: float):
         self._zHeight = gametools.ClampValue(input, gameConstants.ZHIEGHT_MIN, gameConstants.ZHEIGHT_MAX)
 
-    @property
-    def friction(self) -> float:
-        return self._friction
-    @friction.setter
-    def friction(self, input: float):
-        self._friction = input
+    # @property
+    # def friction(self) -> float:
+    #     return self._friction
+    # @friction.setter
+    # def friction(self, input: float):
+    #     self._friction = input
 
 
     #x/y/z
@@ -281,6 +281,12 @@ class box:
 
 
     #physics
+    def UpdateAirGroundFriction(self) -> None:
+        if self.z <= 0:
+            self._friction = gameConstants.FRICTION_GROUND_PERCENTAGE
+        else:
+            self._friction = gameConstants.FRICTION_AIR_PERCENTAGE
+
     def PhysicsTick(self) -> None:
         if (not self.physicsOn):
             return
@@ -297,6 +303,7 @@ class box:
         
         #Velocity
         self.VelocitySpeedLimiter()
+        self.UpdateAirGroundFriction()
         self.VelocityFrictionXY(self._friction)
         self.VelocityMinSpeedLimit()
         self._physicsTickVelocityXYZsign = self.GetVelocitySign()
@@ -310,7 +317,10 @@ class box:
         if self.z <= 0 and self._velocityZ < 0:
             #ground collision
             self.z = 0
-            self._velocityZ = 0
+            self.SetVelocityZ(0)
+        elif self.GetOnCeiling() and self._velocityZ > 0:
+            #bouce off ceiling
+            self.SetVelocityZ(-self._velocityZ * gameConstants.Z_CEILING_BOUNCE)
 
         #out of bounds warp
         self.WarpXY()
@@ -373,6 +383,9 @@ class box:
 
     def GetOnGround(self) -> bool:
         return self.z == gameConstants.Z_MIN
+
+    def GetOnCeiling(self) -> bool:
+        return self.z >= gameConstants.Z_MAX
 
     def __init__(self, xyz: [float, float, float], widthHeightZheight: [float, float, float]) -> None:
         self.ResetAll()

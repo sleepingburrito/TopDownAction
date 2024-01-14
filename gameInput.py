@@ -84,6 +84,8 @@ def TickInputs() -> None:
                     keydown = tmpKeys[pygame.K_a]
                 case gameConstants.INPUT_ID.RIGHT:
                     keydown = tmpKeys[pygame.K_d]
+                case gameConstants.INPUT_ID.JUMP:
+                    keydown = tmpKeys[pygame.K_SPACE]
             #update key input
             AllUserInput[playerId.value][inputType.value].Tick(keydown)
 

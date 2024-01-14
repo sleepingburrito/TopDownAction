@@ -21,6 +21,8 @@ class player:
         self.upRight = 0
         self.downLeft = 0
         self.downRight = 0
+        #other actions
+        self.jumpKey = 0
 
     def UpdateKeys(self) -> None:
         #takes a snapshot of current key state if you are able to use keys
@@ -28,10 +30,10 @@ class player:
 
         if not self.IsStunned():
             #starting key states
-            self.upKey = gameInput.AllUserInput[gcon.PLAYER_ID.ONE][gcon.INPUT_ID.UP].InputTime()
-            self.downKey = gameInput.AllUserInput[gcon.PLAYER_ID.ONE][gcon.INPUT_ID.DOWN].InputTime() 
-            self.leftKey = gameInput.AllUserInput[gcon.PLAYER_ID.ONE][gcon.INPUT_ID.LEFT].InputTime()
-            self.rightKey = gameInput.AllUserInput[gcon.PLAYER_ID.ONE][gcon.INPUT_ID.RIGHT].InputTime()
+            self.upKey = gameInput.AllUserInput[self.playerId][gcon.INPUT_ID.UP].InputTime()
+            self.downKey = gameInput.AllUserInput[self.playerId][gcon.INPUT_ID.DOWN].InputTime() 
+            self.leftKey = gameInput.AllUserInput[self.playerId][gcon.INPUT_ID.LEFT].InputTime()
+            self.rightKey = gameInput.AllUserInput[self.playerId][gcon.INPUT_ID.RIGHT].InputTime()
             #d-pad like lockout
             if self.upKey > 0 and self.downKey > 0:
                 self.upKey = 0
@@ -40,21 +42,18 @@ class player:
                 self.leftKey = 0
                 self.rightKey = 0
             #diagonal
-            self.upRight = 0
-            self.upLeft = 0
             if self.upKey > 0:
                 if self.rightKey > 0:
                     self.upRight = min(self.upKey, self.rightKey)
                 elif self.leftKey > 0:
                     self.upLeft = min(self.upKey, self.leftKey)
-            self.downRight = 0
-            self.downLeft = 0
-            if self.downKey > 0:
+            elif self.downKey > 0:
                 if self.rightKey > 0:
                     self.downRight = min(self.downKey, self.rightKey)
                 elif self.leftKey > 0:
                     self.downLeft = min(self.downKey, self.leftKey)
-        
+            #other actions
+            self.jumpKey = gameInput.AllUserInput[self.playerId][gcon.INPUT_ID.JUMP].InputTime()
         #update key
             
 
@@ -66,11 +65,14 @@ class player:
         self.visible = True
         self.RestAllKeys()
 
+        #moving
+
         #timing reset/set
         for timeTmp in self.timers:
             timeTmp.FullReset()
         #default timer vaules
-            
+        self.timers[gcon.PLAYER_TIMER.JUMP_TIMING].Set(gcon.PLAYER_JUMP_INPUT_TIMING)
+        self.timers[gcon.PLAYER_TIMER.JUMP_TIMING].EndNow()
         #end of reset
 
     def __init__(self, playerId: gcon.PLAYER_ID ) -> None:
@@ -97,7 +99,9 @@ class player:
     #tick actions
     def Tick(self) -> None:
         self.UpdateKeys()
+        self.TickAllTimers()
         self.TickMove()
+        self.TickJumping()
         self.physicsBox.PhysicsTick()
 
 
@@ -136,10 +140,23 @@ class player:
             angle = gcon.ANGLE_RIGHT
 
         #move
-        if angle != gcon.ANGLE_NON:
+        if angle != gcon.ANGLE_NON and self.physicsBox.GetOnGround():
             self.physicsBox.SetAccelerationMagnitudeRelative(angle, speed)
         
         #end tick move
+
+    def TickJumping(self) -> None:
+        #set grace timer
+        if self.jumpKey > 0:
+            self.timers[gcon.PLAYER_TIMER.JUMP_TIMING].ResetTimer()
+        #jumping
+        if self.physicsBox.GetOnGround() and not self.timers[gcon.PLAYER_TIMER.JUMP_TIMING].IsDone():
+            self.physicsBox.SetAccelerationZrelative(gcon.PLAYER_JUMP_AMOUNT)
+            self.timers[gcon.PLAYER_TIMER.JUMP_TIMING].EndNow()
+
+    def TickAllTimers(self) -> None:
+        for timeTmp in self.timers:
+            timeTmp.Tick()
 
 
     #draw
