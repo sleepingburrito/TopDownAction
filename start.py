@@ -7,6 +7,7 @@ import gamePlayer
 import gameTiming
 import json
 import gameBoxPhy
+import gameWall
 
 # pygame setup
 pygame.init()
@@ -18,6 +19,7 @@ gameRunning = True
 #local game code setup
 gameInput.InitInput()
 testplayer = gamePlayer.player(gameConstants.PLAYER_ID.ONE)
+testWall = gameWall.wall((301,202, 50, 150), gameWall.GetNextWallId())
 
 
 while gameRunning:
@@ -43,7 +45,10 @@ while gameRunning:
     #===========================
     # fill the screen with a color to wipe away anything from last frame
     PgScreen.fill(gameConstants.DEFAULT_BG_COLOR)
+    
+    testWall.Draw(PgScreen)
     testplayer.Draw(PgScreen)
+    
     # flip() the display to put your work on screen
     pygame.display.flip()
     #limit frame rate

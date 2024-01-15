@@ -64,8 +64,8 @@ class player:
         self.active = True
         self.visible = True
         self.RestAllKeys()
-
-        #moving
+        self.physicsBox.ResetAcceleration()
+        self.physicsBox.ResetVelocity()
 
         #timing reset/set
         for timeTmp in self.timers:

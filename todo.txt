@@ -1,10 +1,13 @@
+walls
+    -do collide
+
 start working on a player object
     -play with recoil
+    -gets and sets for player
 
 
 game scene
     -holds all sene objects
-    -walls
     -bounching on walls
 
 
