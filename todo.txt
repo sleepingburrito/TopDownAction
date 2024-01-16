@@ -1,5 +1,6 @@
 walls
     -do collide
+    -fix colltions (double check it)
 
 start working on a player object
     -play with recoil

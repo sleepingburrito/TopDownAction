@@ -41,8 +41,9 @@ class box:
         self._physicsOn = True
         self._collisionDetection = True 
 
-        #flags
-        self._physicsTickVelocityXYZsign = (0,0,0) #holds x/y/z tuple of the signs of the velocity of the last physics tick
+        #physics collision helpers
+        self._physicsTickVelocityXYZsign = (0,0,0) #holds x/y/z tuple of the velocity of the last physics tick
+        self._physicsTickLastLTRB = (0,0,0,0) #holds where the box was last velocity update
 
 
     #get/set settings
@@ -92,15 +93,15 @@ class box:
     
     @property
     def checkpointY(self) -> float:
-        return self.checkpointY
+        return self._checkpointY
     @checkpointY.setter
     def checkpointY(self, input: float):
         self._checkpointY = input
 
     @property
     def checkpointZ(self) -> float:
-        return self.checkpointZ
-    @checkpointY.setter
+        return self._checkpointZ
+    @checkpointZ.setter
     def checkpointZ(self, input: float):
         self._checkpointZ = gametools.ClampValue(input, gameConstants.Z_MIN, gameConstants.Z_MAX)
 
@@ -157,7 +158,6 @@ class box:
             self.y = -(self.height + 1)
 
 
-
     #velocity
     #note: Will be x/y unless it says its Z
     def GetVelocityMagnitude(self) -> float:
@@ -194,6 +194,12 @@ class box:
     def SetVelocityYrelative(self, y: float) -> None:
         self._velocityY += y
 
+    def SetVelocityX(self, x: float) -> None:
+        self._velocityX = x
+
+    def SetVelocityY(self, y: float) -> None:
+        self._velocityY = y
+
     def SetVelocityZrelative(self, z: float) -> None:
         self._velocityZ += z
 
@@ -206,8 +212,8 @@ class box:
     def GetVelocityZ(self) -> float:
         return self._velocityZ
 
-    def GetVelocitySign(self) -> tuple[float,float, float]:
-        return (gametools.CopySign(self._x),gametools.CopySign(self._y),gametools.CopySign(self._z))
+    def GetVelocityAll(self) -> tuple[float,float, float]:
+        return (self._velocityX,self._velocityY,self._velocityZ)
 
     def VelocityFrictionX(self, frictionAmount: float) -> None:
         self._velocityX *= frictionAmount
@@ -306,9 +312,10 @@ class box:
         self.UpdateAirGroundFriction()
         self.VelocityFrictionXY(self._friction)
         self.VelocityMinSpeedLimit()
-        self._physicsTickVelocityXYZsign = self.GetVelocitySign()
 
         #x/y
+        self._physicsTickVelocityXYZsign = self.GetVelocityAll()
+        self._physicsTickLastLTRB = self.GetLTRB()
         self.SetXrelative(self._velocityX)
         self.SetYrelative(self._velocityY)
         self.SetZrelative(self._velocityZ)
@@ -325,8 +332,11 @@ class box:
         #out of bounds warp
         self.WarpXY()
 
-    def PhysicsTickVelocitySign(self) -> tuple[float, float, float]:
+    def PhysicsLastTickVelocity(self) -> tuple[float, float, float]:
         return self._physicsTickVelocityXYZsign
+
+    def PhysicsLastTickLTRB(self) -> tuple[float, float, float, float]:
+        return self._physicsTickLastLTRB
 
 
     #checkpoints
@@ -348,11 +358,11 @@ class box:
     def GetXYWH(self) -> tuple[float, float, float, float]:
         return (self.x, self.y, self.width, self.height)
 
-    def GetXYHW(self) -> tuple[float, float, float, float]:
-        return (self.x, self.y, self.height, self.width)
+    def GetXYWH(self) -> tuple[float, float, float, float]:
+        return (self.x, self.y, self.width, self.height)
     
-    def GetXYHWwithZYoffset(self) -> tuple[float, float, float, float]:
-        return (self.x, self.y - self.z, self.height, self.width)
+    def GetXYWHwithZYoffset(self) -> tuple[float, float, float, float]:
+        return (self.x, self.y - self.z, self.width, self.height)
 
     def GetCenterXY(self) -> tuple[float, float]:
         return (self.x + self._width / 2, self.y + self.height / 2)
@@ -360,17 +370,29 @@ class box:
     def GetLeft(self) -> float:
         return self.x
     
+    def SetLeft(self, newLeft: float) -> None:
+        self.x = newLeft
+
     def GetTop(self) -> float:
         return self.y
     
+    def SetTop(self, newTop: float) -> None:
+        self.y = newTop
+
     def GetTopZ(self) -> float:
         return self.z + self.zHeight
 
     def GetRight(self) -> float:
         return self.x + self.width
     
+    def SetRight(self, newRight: float) -> None:
+        self.x = newRight - self.width
+
     def GetBottom(self) -> float:
         return self.y + self.height
+
+    def SetBottom(self, newBottom: float) -> None:
+        self.y = newBottom - self.height
 
     def GetBottomZ(self) -> float:
         return self.z
@@ -422,6 +444,6 @@ class box:
         if gameConstants.GAME_DEBUG:
             #shadow
             if self.z > 0:
-                pygame.draw.rect(drawToSurface, gameConstants.DEBUG_SHADOW_COLOR, self.GetXYHW(), width = gameConstants.DEBUG_BOX_WIDTH)
+                pygame.draw.rect(drawToSurface, gameConstants.DEBUG_SHADOW_COLOR, self.GetXYWH(), width = gameConstants.DEBUG_BOX_WIDTH)
             #box
-            pygame.draw.rect(drawToSurface, gameConstants.DEBUG_BOX_COLOR, self.GetXYHWwithZYoffset(), width = gameConstants.DEBUG_BOX_WIDTH)
+            pygame.draw.rect(drawToSurface, gameConstants.DEBUG_BOX_COLOR, self.GetXYWHwithZYoffset(), width = gameConstants.DEBUG_BOX_WIDTH)

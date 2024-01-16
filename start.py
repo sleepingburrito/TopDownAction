@@ -38,6 +38,7 @@ while gameRunning:
     #main tick
     gameInput.TickInputs()
     testplayer.Tick()
+    testWall.Collide(testplayer.physicsBox)
 
 
     

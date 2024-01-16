@@ -138,7 +138,7 @@ PLAYER_WALKING_SPEED_MAX = MILLISECONDS_IN_TICK * 1
 #=============================
 WALL_DEFAULT_ZHEIGHT = Z_MAX
 WALL_DEFAULT_Z = Z_MIN
-
+WALL_BOUNCE = 0.4 #how much velocity is kept % wise afer bounce
 
 
 #input
