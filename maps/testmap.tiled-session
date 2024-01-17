@@ -1,0 +1,30 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "test.tmx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "test.tmx": {
+            "scale": 1.3250520833333332,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 192.44526551629264,
+                "y": 217.72729059392321
+            }
+        }
+    },
+    "last.exportedFilePath": "C:/Users/email/Documents/pythonStuff/TopDownAction/maps",
+    "map.height": 16,
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "openFiles": [
+        "test.tmx"
+    ],
+    "project": "testmap.tiled-project",
+    "recentFiles": [
+        "test.tmx"
+    ]
+}
