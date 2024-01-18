@@ -6,16 +6,17 @@ import gameBoxPhy
 import gameUi
 #import math
 
-_nextWallId = -1
-def GetNextWallId() -> int:
-    global _nextWallId
-    _nextWallId += 1
-    return _nextWallId
+#test wall ids
+# _nextWallId = -1
+# def GetNextWallId() -> int:
+#     global _nextWallId
+#     _nextWallId += 1
+#     return _nextWallId
 
 class wall:
 
     def ResetWall(self) -> None:
-        self.active = True
+        self.active = False
         self.visible = True
 
     def __init__(self, xywh: tuple[float, float, float, float], instanceId: int ) -> None:

@@ -1,15 +1,15 @@
 walls
-    -do collide
-    -fix colltions (double check it)
+    -fix colltions (double check it) (polish)
 
 start working on a player object
-    -play with recoil
+    -play with recoil (like if you can make the physics do it)
     -gets and sets for player
+    -reset player
 
 
 game scene
+    -loading level from file
     -holds all sene objects
-    -bounching on walls
 
 
 make random

@@ -61,7 +61,7 @@ class player:
     def Reset(self) -> None:
         self.hp = gcon.PLAYER_MAX_HP
         self.blockControl = False
-        self.active = True
+        self.active = False
         self.visible = True
         self.RestAllKeys()
         self.physicsBox.ResetAcceleration()
@@ -77,9 +77,7 @@ class player:
 
     def __init__(self, playerId: gcon.PLAYER_ID ) -> None:
         self.playerId = playerId
-        self.physicsBox = gameBoxPhy.box((300,100,0),(gcon.PLAYER_SIZE,gcon.PLAYER_SIZE,0))
-        self.active = True
-        self.visible = True
+        self.physicsBox = gameBoxPhy.box((0,0,0),(gcon.PLAYER_SIZE,gcon.PLAYER_SIZE,0)) #test player starting data
 
         #timing init
         self.timers: list[gTim.GameTimer] = []

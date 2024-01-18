@@ -8,6 +8,7 @@ import gameTiming
 import json
 import gameBoxPhy
 import gameWall
+import gameScene
 
 # pygame setup
 pygame.init()
@@ -18,8 +19,9 @@ gameRunning = True
 
 #local game code setup
 gameInput.InitInput()
-testplayer = gamePlayer.player(gameConstants.PLAYER_ID.ONE)
-testWall = gameWall.wall((301,202, 50, 150), gameWall.GetNextWallId())
+gameScene.InitPlayers()
+gameScene.InitWalls()
+gameScene.LoadScene()
 
 
 while gameRunning:
@@ -29,16 +31,13 @@ while gameRunning:
         if event.type == pygame.QUIT:
             gameRunning = False
 
-    #timing
-    gameTiming.TickMasterClock()
-    
-
-
 
     #main tick
+    gameTiming.TickMasterClock()
     gameInput.TickInputs()
-    testplayer.Tick()
-    testWall.Collide(testplayer.physicsBox)
+    gameScene.TickEverything()
+    #testplayer.Tick()
+    #testWall.Collide(testplayer.physicsBox)
 
 
     
@@ -46,9 +45,9 @@ while gameRunning:
     #===========================
     # fill the screen with a color to wipe away anything from last frame
     PgScreen.fill(gameConstants.DEFAULT_BG_COLOR)
-    
-    testWall.Draw(PgScreen)
-    testplayer.Draw(PgScreen)
+
+    gameScene.DrawPlayers(PgScreen)
+    gameScene.DrawWalls(PgScreen)
     
     # flip() the display to put your work on screen
     pygame.display.flip()
