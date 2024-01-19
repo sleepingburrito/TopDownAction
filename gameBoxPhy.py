@@ -409,6 +409,10 @@ class box:
     def GetOnCeiling(self) -> bool:
         return self.z >= gameConstants.Z_MAX
 
+    def OnScreen(self) -> bool:
+        return self.BoxOverlap((0,0,gameConstants.SCREEN_WIDTH_PIXELS,gameConstants.SCREEN_HEIGHT_PIXELS))
+
+    #initialization
     def __init__(self, xyz: [float, float, float], widthHeightZheight: [float, float, float]) -> None:
         self.ResetAll()
         self.x = xyz[0]

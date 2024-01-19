@@ -1,5 +1,7 @@
 walls
     -fix colltions (double check it) (polish)
+    -make checks for low speed
+    -make min bounc speed and wall hugging if under
 
 start working on a player object
     -play with recoil (like if you can make the physics do it)

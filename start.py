@@ -10,6 +10,7 @@ import gameBoxPhy
 import gameWall
 import gameScene
 
+
 # pygame setup
 pygame.init()
 pygame.mixer.init()
@@ -21,7 +22,7 @@ gameRunning = True
 gameInput.InitInput()
 gameScene.InitPlayers()
 gameScene.InitWalls()
-gameScene.LoadScene()
+gameScene.LoadScene(gameConstants.SCENE_MAP_TEST)
 
 
 while gameRunning:
