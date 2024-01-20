@@ -37,7 +37,6 @@ class wall:
             #find which way to step backwards
             xVelocity = -gametools.ClampValue(velocitySigns[0], -1, 1)
             yVelocity = -gametools.ClampValue(velocitySigns[1], -1, 1)
-            
             #get where other is at
             otherLTRB = otherPhyBox.GetLTRB()
             #brake it down to its parts
@@ -47,35 +46,45 @@ class wall:
             Bottem = otherLTRB[3]
             
             #fail safe
-            maxAttempts = max(abs(xVelocity), abs(yVelocity)) + 1
+            maxAttempts = gcon.VSPEED_MAX + 1
+
+            #bounching
+            bounceAmount = 0
+            if otherPhyBox.GetVelocityMagnitude() >= gcon.WALL_BOUNCE_MIN_VOLOCITY: #if going fast enough
+                bounceAmount = gcon.WALL_BOUNCE
 
             #step backwards untill your free
+            exitOn = "non"
             while maxAttempts >= 0:
-                #test x
+                #step x
                 Left += xVelocity
                 Right += xVelocity
                 if not self.physicsBox.BoxOverlap((Left, Top, Right, Bottem)):
+                    #new placement
+                    otherPhyBox.SetVelocityX(-(otherPhyBox.GetVelocityX() * bounceAmount)) #bounce
                     otherPhyBox.SetLeft(Left)
                     otherPhyBox.SetTop(Top)
-                    otherPhyBox.SetVelocityX(-(otherPhyBox.GetVelocityX() * gcon.WALL_BOUNCE))
                     break
 
-                #test y
+                #step y
                 Top += yVelocity
                 Bottem += yVelocity
                 if not self.physicsBox.BoxOverlap((Left, Top, Right, Bottem)):
+                    otherPhyBox.SetVelocityY(-(otherPhyBox.GetVelocityY() * bounceAmount)) #bounce
+                    #new placement
                     otherPhyBox.SetLeft(Left)
                     otherPhyBox.SetTop(Top)
-                    otherPhyBox.SetVelocityY(-(otherPhyBox.GetVelocityY() * gcon.WALL_BOUNCE))
                     break
                 
                 #sub failsafe
                 maxAttempts -= 1
+                #end of step backwards
 
-            #if it failed to get out
+            #if it failed to get out of the wall reset to checkpoiny
             if maxAttempts < 0:
                 otherPhyBox.TeleportToCheckpoint()
-                otherPhyBox.ResetAccelerationAndVelocity()
+     
+        #Collide end
                 
 
 

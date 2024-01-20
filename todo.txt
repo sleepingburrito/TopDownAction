@@ -1,7 +1,7 @@
-walls
-    -fix colltions (double check it) (polish)
-    -make checks for low speed
-    -make min bounc speed and wall hugging if under
+add projectiles
+
+particlas 
+    -wind
 
 start working on a player object
     -play with recoil (like if you can make the physics do it)
@@ -49,3 +49,4 @@ sparks
 charging attacks
 jumping
 physics based
+a large ball that you can roll that can hurt people if hit (and also could be yourself)

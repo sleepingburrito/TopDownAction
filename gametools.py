@@ -68,4 +68,22 @@ def PointInBox(pointXY: tuple[float, float], boxLTRB: tuple[float, float, float,
         or pointXY[1] > boxLTRB[3] #y is below
     )
 
-#test
+#velocity
+
+def VelocityXGoingLeft(vx: float) -> bool:
+    return vx < 0
+
+def VelocityXGoingRigh(vx: float) -> bool:
+    return vx > 0
+
+def VelocityYGoingUp(vx: float) -> bool:
+    return vx < 0
+
+def VelocityYGoingDown(vx: float) -> bool:
+    return vx > 0
+
+def VelocityZGoingDown(vx: float) -> bool:
+    return vx < 0
+
+def VelocityZGoingUp(vx: float) -> bool:
+    return vx > 0
