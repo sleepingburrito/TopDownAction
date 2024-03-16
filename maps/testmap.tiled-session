@@ -3,16 +3,27 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "test.tmx",
+    "activeFile": "C:/Users/email/Pictures/tile set tower/tower test.tmx",
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "C:/Users/email/Pictures/tile set tower/tower test.tmx": {
+            "scale": 0.5422916666666666,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1209.681137149443,
+                "y": 157.66423357664235
+            }
+        },
+        "C:/Users/email/Pictures/tile set tower/tower test.tmx#tower test tiles": {
+            "scaleInDock": 1
+        },
         "test.tmx": {
             "scale": 1.3250520833333332,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 469.4155103966039,
-                "y": 269.8007153806847
+                "x": 515.8287803152392,
+                "y": 255.8390000393066
             }
         }
     },
@@ -21,10 +32,12 @@
     "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
     "map.lastUsedFormat": "tmx",
     "openFiles": [
-        "test.tmx"
+        "test.tmx",
+        "C:/Users/email/Pictures/tile set tower/tower test.tmx"
     ],
     "project": "testmap.tiled-project",
     "recentFiles": [
-        "test.tmx"
+        "test.tmx",
+        "C:/Users/email/Pictures/tile set tower/tower test.tmx"
     ]
 }
